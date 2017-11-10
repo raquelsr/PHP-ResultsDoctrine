@@ -16,7 +16,7 @@ $user->setUsername($_ENV['ADMIN_USER_NAME']);
 $user->setEmail($_ENV['ADMIN_USER_EMAIL']);
 $user->setPassword($_ENV['ADMIN_USER_PASSWD']);
 $user->setEnabled(true);
-$user->setIdAdmin(true);
+$user->setIsAdmin(true);
 
 try {
     $entityManager->persist($user);

@@ -42,7 +42,16 @@ if (in_array('--json', $argv)) {
     $user->setUsername($newUsername);
     $user->setPassword($newPassword);
     $user->setEmail($newEmail);
-    echo $user;
+    echo PHP_EOL. "Modificado usuario : $username a :".PHP_EOL;
+    echo PHP_EOL . sprintf("  %2s: %20s %30s %7s\n", 'Id', 'Username:', 'Email:', 'Enabled:');
+    echo sprintf(
+        '- %2d: %20s %30s %7s',
+        $user->getId(),
+        $user->getUsername(),
+        $user->getEmail(),
+        ($user->isEnabled()) ? 'true' : 'false'
+    ),
+    PHP_EOL;
 
     $entityManager->flush();
 }

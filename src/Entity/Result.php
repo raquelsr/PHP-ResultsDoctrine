@@ -180,11 +180,13 @@ class Result implements \JsonSerializable
      */
     public function jsonSerialize(): array
     {
-        return array(
-            'id'     => $this->id,
-            'result' => $this->result,
-            'user'   => $this->user,
-            'time'   => $this->time->format('Y-m-d H:i:s')
+        return array (
+            'resultado' => array(
+                        'id'     => $this->id,
+                        'result' => $this->result,
+                        'user'   => $this->user,
+                        'time'   => $this->time->format('Y-m-d H:i:s')
+            )
         );
     }
 }

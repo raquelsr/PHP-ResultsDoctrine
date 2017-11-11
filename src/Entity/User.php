@@ -259,12 +259,14 @@ class User implements \JsonSerializable
      */
     public function jsonSerialize(): array
     {
-        return array(
-            'id'            => $this->id,
-            'username'      => utf8_encode($this->username),
-            'email'         => utf8_encode($this->email),
-            'enabled'       => $this->enabled,
-            'admin'         => $this->isAdmin
+        return array (
+            'user' => array(
+                        'id'            => $this->id,
+                        'username'      => utf8_encode($this->username),
+                        'email'         => utf8_encode($this->email),
+                        'enabled'       => $this->enabled,
+                        'admin'         => $this->isAdmin
+                    )
         );
     }
 }

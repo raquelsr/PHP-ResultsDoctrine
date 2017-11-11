@@ -17,13 +17,15 @@ $results = $resultsRepository->findAll();
 
 if ($argc === 1) {
     $items = 0;
-    /* @var Result $result */
+
     foreach ($results as $result) {
         $entityManager->remove($result);
         $items++;
     }
     $entityManager->flush();
-    echo PHP_EOL . "Borrado: $items results.";
+
+    echo "Se han borrado todos los resultados. Total : $items resultados." . PHP_EOL;
+
 } elseif (in_array('--json', $argv, true)) {
     echo json_encode($results, JSON_PRETTY_PRINT);
 }

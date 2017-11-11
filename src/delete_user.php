@@ -25,9 +25,9 @@ $username   = (string) $argv[1];
 $entityManager = getEntityManager();
 
 $userRepository = $entityManager->getRepository(User::class);
-$users = $userRepository->findBy(array('username' => $username));
+$user = $userRepository->findOneBy(array('username' => $username));
 
-if (empty($users)) {
+if (empty($user)) {
     echo "Usuario $username no encontrado." . PHP_EOL;
     exit(0);
 }
@@ -36,10 +36,10 @@ if (in_array('--json', $argv)) {
     echo json_encode($users, JSON_PRETTY_PRINT);
 } else {
 
-    foreach ($users as $user) {
-        $entityManager->remove($user);
-        echo PHP_EOL . "Borrado usuario $user".PHP_EOL;
-    }
+    $entityManager->remove($user);
     $entityManager->flush();
+
+    echo "Borrado usuario: $user.".PHP_EOL;
+
 }
 

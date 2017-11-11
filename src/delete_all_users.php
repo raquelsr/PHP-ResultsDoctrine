@@ -17,12 +17,15 @@ $users = $userRepository->findAll();
 
 if ($argc === 1) {
     $items = 0;
+
     foreach ($users as $user) {
         $entityManager->remove($user);
         $items++;
     }
     $entityManager->flush();
-    echo PHP_EOL . "Borrado: $items results.";
+
+    echo "Se han borrado todos los usuarios. Total : $items usuarios." . PHP_EOL;
+
 } elseif (in_array('--json', $argv, true)) {
-    echo json_encode($results, JSON_PRETTY_PRINT);
+    echo json_encode($users, JSON_PRETTY_PRINT);
 }

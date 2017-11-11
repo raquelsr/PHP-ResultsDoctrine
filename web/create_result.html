@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Añadir resultado</title>
+</head>
+<body>
+
+<form action="create_result.php" method="post" enctype="multipart/form-data">
+    <fieldset>
+        <legend>Añadir resultados</legend>
+        <table border="0">
+            <tr>
+                <th colspan="2">Resultado</th>
+            </tr>
+            <tr>
+                <td>Nombre de usuario:</td><td><input type="text" name="username"/>   </td>
+            </tr>
+            <tr>
+                <td>Resultado:</td><td><input type="number" name="result" />   </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" value="Añadir resultado" /></td>
+            </tr>
+        </table>
+    </fieldset>
+</form>
+</body>
+</html>

@@ -25,6 +25,9 @@ class UserTest extends TestCase
     protected function setUp()
     {
         $this->user = new User();
+        $this->user->setUsername('Raquel');
+        $this->user->setEmail('raquel@a.com');
+        $this->user->setIsAdmin(true);
     }
 
     /**
@@ -32,9 +35,9 @@ class UserTest extends TestCase
      */
     public function testConstructor()
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $user2 = new User('user2','user2@email.com','user2password',true, true);
+        $this->assertEquals(0,$user2->getId());
+        $this->assertEquals('user2',$user2->getUsername());
     }
 
     /**
@@ -42,9 +45,7 @@ class UserTest extends TestCase
      */
     public function testGetId()
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertEquals(0,$this->user->getId());
     }
 
     /**
@@ -53,9 +54,7 @@ class UserTest extends TestCase
      */
     public function testGetSetUsername()
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertEquals('Raquel',$this->user->getUsername());
     }
 
     /**

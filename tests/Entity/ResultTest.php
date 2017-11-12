@@ -61,9 +61,7 @@ class ResultTest extends \PHPUnit\Framework\TestCase
      */
     public function testConstructor()
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+
     }
 
     /**
@@ -74,9 +72,7 @@ class ResultTest extends \PHPUnit\Framework\TestCase
      */
     public function testGet_Id()
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertEquals('0',$this->result->getId());
     }
 
     /**

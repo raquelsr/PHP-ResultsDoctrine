@@ -16,16 +16,26 @@ require_once __DIR__ . '/../bootstrap.php';
 use MiW\Results\Entity\User;
 
 $entityManager = getEntityManager();
-
 $userRepository = $entityManager->getRepository(User::class);
-$users = $userRepository->findAll();
+
+$username = $_POST['username'];
 
 $tabla = "<table border=\"1\">";
-
 $tabla = $tabla."<tr><td>Nombre de usuario</td><td>Email</td></tr>";
 
-foreach ($users as $user){
-    $tabla = $tabla."<tr><td>".$user->getUsername()."</td><td>".$user->getEmail()."</td></tr>";
+if (empty($username)) {
+    $users = $userRepository->findAll();
+    foreach ($users as $user){
+        $tabla = $tabla."<tr><td>".$user->getUsername()."</td><td>".$user->getEmail()."</td></tr>";
+    }
+
+} else {
+    $users = $userRepository->findOneBy(array('username' => $username));
+    if (empty($users)){
+        echo 'No existe el usuario '.$username;
+        exit(0);
+    }
+    $tabla = $tabla."<tr><td>".$users->getUsername()."</td><td>".$users->getEmail()."</td></tr>";
 }
 
 echo $tabla;

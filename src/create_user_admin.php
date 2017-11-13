@@ -21,6 +21,7 @@ $user->setIsAdmin(true);
 try {
     $entityManager->persist($user);
     $entityManager->flush();
+    echo 'Usuario creado.' . PHP_EOL;
 } catch (Exception $exception) {
     echo $exception->getMessage();
 }

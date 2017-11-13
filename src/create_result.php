@@ -13,7 +13,8 @@ $dotenv->load();
 if ($argc < 3 || $argc > 4) {
     $fich = basename(__FILE__);
     echo <<< MARCA_FIN
-
+    
+    Para insertar resultado debes introducir un resultado y el nombre del usuario.
     Usage: $fich <Result> <UserName> [<Timestamp>]
 
 MARCA_FIN;

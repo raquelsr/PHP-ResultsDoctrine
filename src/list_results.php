@@ -15,7 +15,8 @@ if ($argc > 3) {
     $fich = basename(__FILE__);
     echo <<< MARCA_FIN
 
-    Usage: $fich [<UserName>]
+    Se puede buscar por nombre de usuario o por resultado depende del valor introducido.
+    Usage: $fich [<UserName>] [<Result>]
 
 MARCA_FIN;
     exit(0);
@@ -28,29 +29,36 @@ $userRepository = $entityManager->getRepository(User::class);
 
 if (in_array('--json', $argv, true)) {
     if ($argc ===3){
-        $username = $argv[1];
-        $user = $userRepository->findOneBy(array('username' => $username));
-        $results = $resultsRepository->findBy(array('user' => $user));
-
+        $valor = $argv[1];
+        if (is_numeric($valor)==1){
+            $results = $resultsRepository->findBy(array('result' => $valor));
+        } else {
+            $user = $userRepository->findOneBy(array('username' => $valor));
+            $results = $resultsRepository->findBy(array('user' => $user));
+        }
     } else {
         $results = $resultsRepository->findAll();
     }
-    echo json_encode($results, JSON_PRETTY_PRINT);
+    echo json_encode($results, JSON_PRETTY_PRINT).PHP_EOL;
+
 }else if ($argc === 1) {
     $results = $resultsRepository->findAll();
     echo PHP_EOL . sprintf('%3s - %5s - %20s - %s', 'Id', 'res', 'username', 'time') . PHP_EOL;
     $items = 0;
-    /* @var Result $result */
     foreach ($results as $result) {
         echo $result . PHP_EOL;
         $items++;
     }
-    echo PHP_EOL . "Total: $items results.";
-} else if ($argc === 2){
-    $username = $argv[1];
-    $user = $userRepository->findOneBy(array('username' => $username));
-    $results = $resultsRepository->findBy(array('user' => $user));
+    echo PHP_EOL . "Total: $items results.".PHP_EOL;
 
+} else if ($argc === 2){
+    $valor = $argv[1];
+    if (is_numeric($valor)==1){
+        $results = $resultsRepository->findBy(array('result' => $valor));
+    } else {
+        $user = $userRepository->findOneBy(array('username' => $valor));
+        $results = $resultsRepository->findBy(array('user' => $user));
+    }
     echo PHP_EOL . sprintf('%3s - %5s - %20s - %s', 'Id', 'res', 'username', 'time') . PHP_EOL;
     $items = 0;
     /* @var Result $result */

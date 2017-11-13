@@ -24,8 +24,10 @@ if ($argc === 1) {
     }
     $entityManager->flush();
 
-    echo "Se han borrado todos los resultados. Total : $items resultados." . PHP_EOL;
+    echo 'Se han borrado todos los resultados. Total : ' . $items . ' resultados borrados.' . PHP_EOL;
 
-} elseif (in_array('--json', $argv, true)) {
-    echo json_encode($results, JSON_PRETTY_PRINT);
 }
+
+/*elseif (in_array('--json', $argv, true)) {
+    echo json_encode($results, JSON_PRETTY_PRINT);
+}*/

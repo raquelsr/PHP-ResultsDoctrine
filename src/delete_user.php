@@ -1,4 +1,4 @@
-<?php   // src/scripts/list_users.php
+<?php // src/scripts/list_users.php
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -20,7 +20,7 @@ MARCA_FIN;
     exit(0);
 }
 
-$username   = (string) $argv[1];
+$username = (string)$argv[1];
 
 $entityManager = getEntityManager();
 
@@ -32,14 +32,9 @@ if (empty($user)) {
     exit(0);
 }
 
-if (in_array('--json', $argv)) {
-    echo json_encode($users, JSON_PRETTY_PRINT);
-} else {
+$entityManager->remove($user);
+$entityManager->flush();
 
-    $entityManager->remove($user);
-    $entityManager->flush();
+echo "Borrado usuario: $user." . PHP_EOL;
 
-    echo "Borrado usuario: $user.".PHP_EOL;
-
-}
 

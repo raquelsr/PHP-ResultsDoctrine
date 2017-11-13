@@ -28,10 +28,14 @@ if (in_array('--json', $argv)) {
     if ($argc ===3){
         $username = $argv[1];
         $users = $userRepository->findOneBy(array('username' => $username));
+        if (empty($users)){
+            echo 'No existe el usuario: ' . $username . PHP_EOL;
+        }
     } else {
         $users = $userRepository->findAll();
     }
-    echo json_encode($users, JSON_PRETTY_PRINT);
+        echo json_encode($users, JSON_PRETTY_PRINT).PHP_EOL;
+
 
 } else if ($argc === 1) {
     $users = $userRepository->findAll();
@@ -51,23 +55,25 @@ if (in_array('--json', $argv)) {
             $items++;
         }
 
-        echo "\nTotal: $items users.\n\n".PHP_EOL;
+        echo "\nTotal: $items users.\n".PHP_EOL;
 
 } else if ($argc ===2 ){
 
     $username = $argv[1];
-
     $user = $userRepository->findOneBy(array('username' => $username));
 
-    echo PHP_EOL . sprintf("  %2s: %20s %30s %7s\n", 'Id', 'Username:', 'Email:', 'Enabled:');
-    echo sprintf(
+    if (empty($user)){
+        echo 'No existe el usuario: ' . $username . "." . PHP_EOL;
+    } else {
+        echo PHP_EOL . sprintf("  %2s: %20s %30s %7s\n", 'Id', 'Username:', 'Email:', 'Enabled:');
+        echo sprintf(
             '- %2d: %20s %30s %7s',
             $user->getId(),
             $user->getUsername(),
             $user->getEmail(),
             ($user->isEnabled()) ? 'true' : 'false'
         ),
-        PHP_EOL;
-
+        PHP_EOL . PHP_EOL;
+    }
 }
 

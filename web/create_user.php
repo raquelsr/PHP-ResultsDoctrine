@@ -23,11 +23,11 @@ $user = new User();
 $user->setUsername($_POST['username']);
 $user->setEmail($_POST['email']);
 $user->setPassword($_POST['password']);
-$user->setEnabled(isset($_POST['enabled']) ? true : false);
-$user->setIsAdmin(isset($_POST['admin']) ? true : false);
 
-$txtEnabled= isset($_POST['enabled']) ? 'S&iacute;' : 'No';
-$txtAdmin= isset($_POST['admin']) ? 'S&iacute;' : 'No';
+$txtEnabled = $user->isEnabled() ? 'S&iacute;' : 'No';
+$txtLastLogin = $user->getLastLogin()->format('d-m-Y H:i:s');
+$txtToken = $user->getToken();
+
 
 try {
     $entityManager->persist($user);
@@ -35,9 +35,9 @@ try {
 
     echo <<< ___MARCA_FIN
         <h2 align="center">El usuario "$_POST[username]" ha sido añadido correctamente.</h2>
-      <table align="center" border="1" summary="formulario">
+      <table align="center" border="8" bgcolor="#e0ffff" summary="formulario">
           <tr>
-              <th colspan="2">Usuario añadido: </th>
+              <th bgcolor="#ffebcd" colspan="2">Usuario </th>
             </tr>
           <tr>
               <td>Nombre:</td><td>$_POST[username]</td>
@@ -52,9 +52,17 @@ try {
               <td>Activado:</td><td>$txtEnabled</td>
             </tr>
           <tr>
-              <td>¿Es administrador?</td><td>$txtAdmin</td>
+              <td>Último acceso:</td><td>$txtLastLogin</td>
             </tr>
+           <tr>
+               <td>Token:</td><td>$txtToken</td>
+           </tr>
         </table>
+</br>
+
+<a href="index.html">Volver a la página de inicio</a>
+</br>
+<a href="html/create_user.html">Crear otro usuario</a>
 ___MARCA_FIN;
 
 } catch (Exception $exception) {

@@ -2,9 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Actualizar usuario</title>
+    <title>Modificar resultado</title>
 </head>
 <body>
+
+<p align="center"><a href="index.html">Volver a página de inicio</a></p>
+
+<h1 align="center">MODIFICAR RESULTADOS</h1>
 
 <?php
 
@@ -22,52 +26,40 @@ $entityManager = getEntityManager();
 $userRepository = $entityManager->getRepository(User::class);
 $resultRepository = $entityManager->getRepository(Result::class);
 
-$tabla = "<table border=\"1\">";
-$tabla = $tabla . "<tr><td>Nombre de usuario</td><td>Resultado</td></tr>";
-
 $results = $resultRepository->findAll();
-foreach ($results as $result) {
-    $user = $result->getUser();
-    $tabla = $tabla . "<tr><td>" . $user . "</td><td>" . $result->getResult() . "</td></tr>";
-}
-echo $tabla;
 
-$form = "<form action=\"update_result_edit.php\" method=\"post\" enctype=\"multipart/form-data\">
-    <fieldset>
-        <table border=\"0\">
+
+$formulario = "<form action=\"update_result_edit.php\" method=\"post\" enctype=\"multipart/form-data\">
+        <table align='center' border='2'  bgcolor=\"#e0ffff\" >
             <tr>
-                <th colspan=\"2\">Crear formulario</th>
-            </tr>";
+                <th bgcolor=\"#FFFFFF\" colspan=\"5\">Selecciona el resultado a modificar:</th>
+            </tr>
+            <tr bgcolor='#ffdab9'>
+                <td> </td>
+                <td> Nombre de usuario </td>
+                <td> Resultado</td>
+                <td> Fecha </td>
+             </tr>";
 
-$item = 0;
 
 foreach ($results as $result) {
+    $id = $result->getId();
+    $txtTime = $result->getTime()->format('d-m-Y H:i:s');
 
-    $num =  (integer) $result->getResult();
-    $num2 = (string) $num;
-    echo 'num' . $num2;
+    $formulario = $formulario . "<tr  bgcolor=\"#e0ffff\"><td><input type = \"radio\" name =\"result\" value = $id/>" .
+        "</td><td>" . $result->getUser()->getUsername() . "</td><td>" . $result->getResult() .
+        "</td><td>". $txtTime .  "</td></tr>";
 
-    $user = $result->getUser();
-
-
-
-    $form = $form . " <tr>
-                    <td>Editar resultado:</td><td><input type=\"text\" name=$item value = $num/>   </td>
-                </tr";
-
-    $item++;
 }
 
-$form = $form . "<tr>
-                    <td colspan=\"2\" align=\"center\"><input type=\"submit\" value=\"Editar\" /></td>
-                </tr>
-            </table>
-        </fieldset>
-    </form>";
+$formulario = $formulario . "<tr >
+                <td colspan = \"5\" bgcolor='#ffdab9' align = \"center\" ><input type = \"submit\" value = \"Modificar\" /></td >
+            </tr >
+        </table >
+</form >";
 
-echo $form;
+echo $formulario;
 ?>
-
 
 
 </body>

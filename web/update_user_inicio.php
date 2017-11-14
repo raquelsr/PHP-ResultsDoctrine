@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Modificar usuario</title>
+    <title>Modificar usuarios</title>
 </head>
 <body>
-<h1 align="center">MODIFICAR USUARIO</h1>
+
+<p align="center"><a href="index.html">Volver a página de inicio</a></p>
+
+<h1 align="center">MODIFICAR USUARIOS</h1>
 
 <?php
 
@@ -19,32 +20,42 @@ use MiW\Results\Entity\User;
 
 $entityManager = getEntityManager();
 $userRepository = $entityManager->getRepository(User::class);
-
-$tabla = "<table border=\"1\">";
-$tabla = $tabla . "<tr><td>Nombre de usuario</td><td>Email</td></tr>";
-
 $users = $userRepository->findAll();
-foreach ($users as $user) {
-    $tabla = $tabla . "<tr><td>" . $user->getUsername() . "</td><td>" . $user->getEmail() . "</td></tr>";
-}
-echo $tabla;
 
-echo <<<____MARCAFIN
-    <form action="update_user_edit.php" method="post" enctype="multipart/form-data">
-        <fieldset>
-            <table border="0">
-                <tr>
-                    <td>Editar usuario:</td><td><input type="text" name="username"/>   </td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center"><input type="submit" value="Editar" /></td>
-                </tr>
-            </table>
-        </fieldset>
-    </form>
-____MARCAFIN;
+
+$formulario = "<form action=\"update_user_edit.php\" method=\"post\" enctype=\"multipart/form-data\">
+        <table align='center' border='2'  bgcolor=\"#e0ffff\" >
+            <tr>
+                <th bgcolor=\"#FFFFFF\" colspan=\"5\">Selecciona el usuario a modificar:</th>
+            </tr>
+            <tr bgcolor='#ffdab9'>
+                <td></td>
+                <td> Nombre de usuario </td>
+                <td> Email</td>
+                <td> Activado </td>
+                <td> Último acceso</td>
+             </tr>";
+
+foreach ($users as $user) {
+    $username = $user->getUsername();
+    $txtEnabled= $user->isEnabled() ? 'S&iacute;' : 'No';
+    $id = $user->getId();
+    $txtLastLogin = $user->getLastLogin()->format('d-m-Y H:i:s');
+    $formulario = $formulario . "<tr><td><input type = \"radio\" name =\"user\" value = $id/>  
+        </td><td>" . $user->getUsername() . "</td><td>" . $user->getEmail() .
+        "</td><td>". $txtEnabled . "</td><td>" . $txtLastLogin . "</td></tr>";
+
+}
+
+$formulario = $formulario . "<tr >
+                <td colspan = \"5\" bgcolor='#ffdab9' align = \"center\" ><input type = \"submit\" value = \"Modificar\" /></td >
+            </tr >
+        </table >
+</form >";
+
+echo $formulario;
+
 
 ?>
-
 </body>
 </html>

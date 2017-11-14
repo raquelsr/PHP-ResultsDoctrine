@@ -1,9 +1,12 @@
 <html>
 <head>
-    <title>Resultados</title>
+    <title>Resultados eliminados</title>
 </head>
 <body>
-<p align="center">Resultados</p>
+
+<p align="center"><a href="index.html">Volver a página de inicio</a></p>
+
+<h2 align="center">Se han eliminado los siguientes resultados:</h2>
 
 <?php
 
@@ -19,18 +22,24 @@ $entityManager = getEntityManager();
 $resultRepository = $entityManager->getRepository(Result::class);
 $results = $resultRepository->findAll();
 
-$item = 0;
+$tabla = "<table align='center' border=\"8\"  bgcolor=\"#ffebcd\">";
+$tabla = $tabla . "<tr><td>Nombre de usuario</td><td>Resultado</td><td>Fecha</td></tr>";
+
 foreach ($results as $result){
 
     $valor = $_POST[$item];
-    $user = $result->getUser();
-    echo $valor;
     if ($valor == 1 ){
         $entityManager->remove($result);
-        echo "borrado resultado $result del usuario $user";
+
+        $txtTime = $result->getTime()->format('d-m-Y H:i:s');
+        $tabla = $tabla . "<tr bgcolor=\"#e0ffff\"><td>" . $result->getUser()->getUsername() . "</td><td>" . $result->getResult() .
+            "</td><td>". $txtTime . "</td></tr>";
     }
     $item++;
 
 }
-
+echo $tabla . PHP_EOL;
 $entityManager->flush();
+?>
+</body>
+</html>

@@ -20,36 +20,39 @@ $userRepository = $entityManager->getRepository(User::class);
 
 $username = $_POST['username'];
 
-$tabla = "<table align='center' border=\"8\">";
-$tabla = $tabla."<tr><td>Nombre de usuario</td><td>Email</td><td>Activado</td><td>Administrador</td></tr>";
+$tabla = "<table align='center' bgcolor=\"#e0ffff\" border=\"8\">";
+$tabla = $tabla."<tr bgcolor=\"#ffebcd\"><td>Nombre de usuario</td><td>Email</td><td>Activado</td><td>Último acceso</td></tr>";
 
 if (empty($username)) {
     $users = $userRepository->findAll();
     foreach ($users as $user){
         $txtEnabled= $user->isEnabled() ? 'S&iacute;' : 'No';
-        $txtAdmin= $user->isAdmin() ? 'S&iacute;' : 'No';
+        $txtLastLogin = $user->getLastLogin()->format('d-m-Y H:i:s');
         $tabla = $tabla."<tr><td>".$user->getUsername()."</td><td>".$user->getEmail().
-            "</td><td>". $txtEnabled . "</td><td>" . $txtAdmin . "</td></tr>";
+            "</td><td>". $txtEnabled . "</td><td>" . $txtLastLogin . "</td></tr>";
     }
 
 } else {
-    $user = $userRepository->findOneBy(array('username' => $username));
-    $txtEnabled= $user->isEnabled() ? 'S&iacute;' : 'No';
-    $txtAdmin= $user->isAdmin() ? 'S&iacute;' : 'No';
-    if (empty($user)){
+    $users = $userRepository->findBy(array('username' => $username));
+    if (empty($users)){
         echo 'No existe el usuario '.$username;
         exit(0);
+    } else {
+        foreach($users as $user){
+            $txtEnabled= $user->isEnabled() ? 'S&iacute;' : 'No';
+            $txtLastLogin = $user->getLastLogin()->format('d-m-Y H:i:s');
+            $tabla = $tabla."<tr><td>".$user->getUsername()."</td><td>".$user->getEmail().
+                "</td><td>". $txtEnabled . "</td><td>" . $txtLastLogin . "</td></tr>";
+        }
     }
-    $tabla = $tabla."<tr><td>".$user->getUsername()."</td><td>".$user->getEmail().
-        "</td><td>". $txtEnabled . "</td><td>" . $txtAdmin . "</td></tr>";
 }
 
 echo $tabla;
 
 ?>
 
-<a href="list_users.php">Volver a buscar</a></br>
-<a href="index.html">Inicio</a>
+<a href="list_users.php">Nueva búsqueda</a><br>
+<a href="index.html">Volver a página de inicio</a>
 
 </body>
 </html>

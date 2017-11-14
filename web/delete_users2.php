@@ -3,10 +3,11 @@
     <title>Usuarios eliminados</title>
 </head>
 <body>
-<h1 align="center">USUARIOS ELIMINADOS</h1>
 
-</br>
-<p align="center">Se han eliminado los usuarios: </p>
+<p align="center"><a href="index.html">Volver a página de inicio</a></p>
+
+<h2 align="center">Se han eliminado los siguientes usuarios:</h2>
+<br>
 
 <?php
 
@@ -22,18 +23,24 @@ $entityManager = getEntityManager();
 $userRepository = $entityManager->getRepository(User::class);
 $users = $userRepository->findAll();
 
-$item = 0;
+$tabla = "<table align='center' border=\"8\"  bgcolor=\"#ffebcd\">";
+$tabla = $tabla . "<tr><td>Nombre de usuario</td><td>Email</td><td>Activado</td><td>Último acceso</td></tr>";
+
 foreach ($users as $user){
 
     $valor = $_POST[$item];
     if ($valor == 1 ){
         $entityManager->remove($user);
-        echo $user;
+
+        $txtEnabled= $user->isEnabled() ? 'S&iacute;' : 'No';
+        $txtLastLogin = $user->getLastLogin()->format('d-m-Y H:i:s');
+        $tabla = $tabla . "<tr bgcolor=\"#e0ffff\"><td>" . $user->getUsername() . "</td><td>" . $user->getEmail() .
+         "</td><td>". $txtEnabled . "</td><td>" . $txtLastLogin . "</td></tr>";
     }
     $item++;
 
 }
-
+echo $tabla . PHP_EOL;
 $entityManager->flush();
 ?>
 </body>

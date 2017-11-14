@@ -6,12 +6,14 @@
 </head>
 <body>
 
-<form action="../create_user.php" method="post" enctype="multipart/form-data">
-    <fieldset>
-        <legend>Alta usuario</legend>
-        <table border="0">
+<p align="center"><a href="../index.html">Volver a página de inicio</a></p>
+
+<h1 align="center">ALTA USUARIO</h1>
+
+<form  action="../create_user.php" method="post" enctype="multipart/form-data">
+        <table  align="center" bgcolor="#e0ffff" border="4">
             <tr>
-                <th colspan="2">Datos del nuevo usuario</th>
+                <th bgcolor="#ffebcd" colspan="2">Datos del nuevo usuario</th>
             </tr>
             <tr>
                 <td>Nombre de usuario:</td><td><label>
@@ -29,20 +31,9 @@
             </label></td>
             </tr>
             <tr>
-                <td>¿Está activado?</td><td><label>
-                <input type="checkbox" name="enabled" value="1"/>
-            </label></td>
-            </tr>
-            <tr>
-                <td>¿Permisos de administrador?</td><td><label>
-                <input type="checkbox" name="admin" value="1"/>
-            </label></td>
-            </tr>
-            <tr>
                 <td colspan="2" align="center"><input type="submit" value="Añadir" /></td>
             </tr>
         </table>
-    </fieldset>
 </form>
 
 </body>

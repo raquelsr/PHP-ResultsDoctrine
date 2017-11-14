@@ -6,6 +6,9 @@
 </head>
 <body>
 
+<p align="center"><a href="index.html">Volver a página de inicio</a></p>
+
+
 <h1 align="center"> LISTA DE USUARIOS</h1>
 <?php
 
@@ -20,34 +23,32 @@ use MiW\Results\Entity\User;
 $entityManager = getEntityManager();
 $userRepository = $entityManager->getRepository(User::class);
 
-$tabla = "<table align='center' border=\"8\">";
-$tabla = $tabla . "<tr><td>Nombre de usuario</td><td>Email</td><td>Activado</td><td>Administrador</td></tr>";
+$tabla = "<table align='center' border=\"8\"  bgcolor=\"#ffebcd\">";
+$tabla = $tabla . "<tr><td>Nombre de usuario</td><td>Email</td><td>Activado</td><td>Último acceso</td></tr>";
 
 $users = $userRepository->findAll();
 
-foreach ($users as $user) {
-    $txtEnabled= $user->isEnabled() ? 'S&iacute;' : 'No';
-    $txtAdmin= $user->isAdmin() ? 'S&iacute;' : 'No';
-    $tabla = $tabla . "<tr><td>" . $user->getUsername() . "</td><td>" . $user->getEmail() .
-        "</td><td>". $txtEnabled . "</td><td>" . $txtAdmin . "</td></tr>";
-}
-echo $tabla . PHP_EOL;
 
 echo <<<____MARCAFIN
     <form action="list_users2.php" method="post" enctype="multipart/form-data">
-        <table  align="center" border="0">
-            <tr>
-                <th colspan="2">Buscar usuario</th>
-            </tr>
+        <table  bgcolor="#48d1cc" align="center" border="0">
             <tr>
                 <td>Nombre de usuario:</td><td><input type="text" name="username"/>   </td>
-            </tr>
-            <tr>
+           
                 <td colspan="2" align="center"><input type="submit" value="Buscar" /></td>
             </tr>
         </table>
     </form>
+</br>
 ____MARCAFIN;
+
+foreach ($users as $user) {
+    $txtEnabled= $user->isEnabled() ? 'S&iacute;' : 'No';
+    $txtLastLogin = $user->getLastLogin()->format('d-m-Y H:i:s');
+    $tabla = $tabla . "<tr bgcolor=\"#e0ffff\" ><td>" . $user->getUsername() . "</td><td>" . $user->getEmail() .
+        "</td><td>". $txtEnabled . "</td><td>" . $txtLastLogin . "</td></tr>";
+}
+echo $tabla . PHP_EOL;
 
 ?>
 

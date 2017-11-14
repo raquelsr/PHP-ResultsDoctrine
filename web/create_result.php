@@ -6,6 +6,11 @@
 </head>
 <body>
 
+<p align="center"><a href="index.html">Volver a página de inicio</a></p>
+<p align="center"><a href="html/create_result.html">Añadir nuevo resultado</a></p>
+
+
+
 <?php
 require __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../bootstrap.php';
@@ -22,24 +27,27 @@ $username = $_POST['username'];
 $newResult = $_POST['result'];
 $newTimestamp = new DateTime('now');
 
-$user = $entityManager
+$users = $entityManager
     ->getRepository(User::class)
-    ->findOneBy(['username' => $username]);
+    ->findBy(['username' => $username]);
 
-if (empty($user)) {
+if (empty($users)) {
     echo "Usuario $username no encontrado." . PHP_EOL;
     exit(0);
 }
 
-$result = new Result($newResult, $user, $newTimestamp);
-try {
-    $entityManager->persist($result);
-    $entityManager->flush();
+foreach ($users as $user){
+    $result = new Result($newResult, $user, $newTimestamp);
+    try {
+        $entityManager->persist($result);
+        $entityManager->flush();
 
-    echo <<< ___MARCA_FIN
-  <table border="1" summary="formulario">
+        echo <<< ___MARCA_FIN
+                <h2 align="center">El resultado ha sido añadido correctamente:</h2>
+
+  <table  align="center" border="8" bgcolor="#e0ffff"  summary="formulario">
 	  <tr>
-		  <th colspan="2">Usuario añadido: </th>
+		  <th bgcolor="#ffebcd" colspan="2">Resultado </th>
 		</tr>
 	  <tr>
 		  <td>Nombre de usuario:</td><td>$_POST[username]</td>
@@ -50,9 +58,14 @@ try {
 	</table>
 ___MARCA_FIN;
 
-} catch (Exception $exception) {
-    echo $exception->getMessage();
+    } catch (Exception $exception) {
+        echo <<<____ERROR
+        <h2 align="center">Ha ocurrido un error.</h2>
+____ERROR;
+        echo $exception->getMessage();
+    }
 }
+
 
 ?>
 </body>

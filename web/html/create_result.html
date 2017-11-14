@@ -6,24 +6,29 @@
 </head>
 <body>
 
+<p align="center"><a href="../index.html">Volver a página de inicio</a></p>
+
+<h1 align="center">AÑADIR RESULTADO</h1>
+
 <form action="../create_result.php" method="post" enctype="multipart/form-data">
-    <fieldset>
-        <legend>Añadir resultados</legend>
-        <table border="0">
+        <table align="center"  bgcolor="#e0ffff" border="4">
             <tr>
-                <th colspan="2">Resultado</th>
+                <th bgcolor="#ffebcd" colspan="2">Añadir resultado</th>
             </tr>
             <tr>
-                <td>Nombre de usuario:</td><td><input type="text" name="username"/>   </td>
+                <td>Nombre de usuario:</td><td><label>
+                <input type="text" name="username"/>
+            </label></td>
             </tr>
             <tr>
-                <td>Resultado:</td><td><input type="number" name="result" />   </td>
+                <td>Resultado:</td><td><label>
+                <input type="number" name="result"/>
+            </label></td>
             </tr>
             <tr>
                 <td colspan="2" align="center"><input type="submit" value="Añadir resultado" /></td>
             </tr>
         </table>
-    </fieldset>
 </form>
 </body>
 </html>

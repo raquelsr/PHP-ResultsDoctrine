@@ -3,6 +3,9 @@
     <title>Eliminar usuarios</title>
 </head>
 <body>
+
+<p align="center"><a href="index.html">Volver a página de inicio</a></p>
+
 <h1 align="center">ELIMINAR USUARIOS</h1>
 
 <?php
@@ -21,18 +24,16 @@ $users = $userRepository->findAll();
 
 
 $formulario = "<form action=\"delete_users2.php\" method=\"post\" enctype=\"multipart/form-data\">
- <fieldset>
-        <legend>Lista de usuarios</legend>
-        <table border=\"0\">
+        <table bgcolor=\"#e0ffff\" align=\"center\" border=\"0\">
             <tr>
-                <th colspan=\"5\">Selecciona los usuarios a eliminar:</th>
+                <th bgcolor='#FFFFFF' colspan=\"5\">Selecciona los usuarios a eliminar:</th>
             </tr>
-            <tr bgcolor='#ffdab9'>
+            <tr bgcolor='#ffebcd'>
                 <td></td>
                 <td> Nombre de usuario </td>
                 <td> Email</td>
                 <td> Activado </td>
-                <td> Administrador</td>
+                <td> Último acceso</td>
              </tr>";
 
 $item = 0;
@@ -40,19 +41,18 @@ $item = 0;
 foreach ($users as $user) {
     $username = $user->getUsername();
     $txtEnabled= $user->isEnabled() ? 'S&iacute;' : 'No';
-    $txtAdmin= $user->isAdmin() ? 'S&iacute;' : 'No';
+    $txtLastLogin = $user->getLastLogin()->format('d-m-Y H:i:s');
     $formulario = $formulario . "<tr><td><input type = \"checkbox\" name =$item value = \"1\" />  
         </td><td>" . $user->getUsername() . "</td><td>" . $user->getEmail() .
-        "</td><td>". $txtEnabled . "</td><td>" . $txtAdmin . "</td></tr>";
+        "</td><td>". $txtEnabled . "</td><td>" . $txtLastLogin . "</td></tr>";
 
     $item++;
 }
 
 $formulario = $formulario . "<tr >
-                <td colspan = \"5\" bgcolor='#008b8b' align = \"center\" ><input type = \"submit\" value = \"Eliminar\" /></td >
+                <td colspan = \"5\" bgcolor='#ffebcd' align = \"center\" ><input type = \"submit\" value = \"Eliminar\" /></td >
             </tr >
         </table >
-    </fieldset >
 </form >";
 
 echo $formulario;

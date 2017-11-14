@@ -1,9 +1,9 @@
 <html>
 <head>
-    <title>Usuarios</title>
+    <title>Eliminar usuarios</title>
 </head>
 <body>
-<p align="center">USUARIOS</p>
+<h1 align="center">ELIMINAR USUARIOS</h1>
 
 <?php
 
@@ -22,24 +22,34 @@ $users = $userRepository->findAll();
 
 $formulario = "<form action=\"delete_users2.php\" method=\"post\" enctype=\"multipart/form-data\">
  <fieldset>
-        <legend>Formulario de Datos personales</legend>
+        <legend>Lista de usuarios</legend>
         <table border=\"0\">
             <tr>
-                <th colspan=\"2\">Crear formulario</th>
-            </tr>";
+                <th colspan=\"5\">Selecciona los usuarios a eliminar:</th>
+            </tr>
+            <tr bgcolor='#ffdab9'>
+                <td></td>
+                <td> Nombre de usuario </td>
+                <td> Email</td>
+                <td> Activado </td>
+                <td> Administrador</td>
+             </tr>";
 
 $item = 0;
 
 foreach ($users as $user) {
     $username = $user->getUsername();
+    $txtEnabled= $user->isEnabled() ? 'S&iacute;' : 'No';
+    $txtAdmin= $user->isAdmin() ? 'S&iacute;' : 'No';
     $formulario = $formulario . "<tr><td><input type = \"checkbox\" name =$item value = \"1\" />  
-        </td><td>" . $user->getUsername() . "</td><td>" . $user->getEmail() . "</td></tr>";
+        </td><td>" . $user->getUsername() . "</td><td>" . $user->getEmail() .
+        "</td><td>". $txtEnabled . "</td><td>" . $txtAdmin . "</td></tr>";
 
     $item++;
 }
 
 $formulario = $formulario . "<tr >
-                <td colspan = \"2\" align = \"center\" ><input type = \"submit\" value = \"Borrar\" /></td >
+                <td colspan = \"5\" bgcolor='#008b8b' align = \"center\" ><input type = \"submit\" value = \"Eliminar\" /></td >
             </tr >
         </table >
     </fieldset >
@@ -47,30 +57,6 @@ $formulario = $formulario . "<tr >
 
 echo $formulario;
 
-
-
-$tabla = "<table border=\"1\">";
-$tabla = $tabla . "<tr><td>Nombre de usuario</td><td>Email</td></tr>";
-
-foreach ($users as $user) {
-    $tabla = $tabla . "<tr><td>" . $user->getUsername() . "</td><td>" . $user->getEmail() . "</td></tr>";
-}
-echo $tabla;
-
-echo <<<____MARCAFIN
-    <form action="delete_users2.php" method="post" enctype="multipart/form-data">
-        <fieldset>
-            <table border="0">
-                <tr>
-                    <td>Editar usuario:</td><td><input type="text" name="username"/>   </td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center"><input type="submit" value="Borrar" /></td>
-                </tr>
-            </table>
-        </fieldset>
-    </form>
-____MARCAFIN;
 
 ?>
 </body>

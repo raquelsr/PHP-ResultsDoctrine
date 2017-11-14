@@ -1,10 +1,12 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Usuarios</title>
+    <meta charset="UTF-8">
+    <title>Lista de usuarios</title>
 </head>
 <body>
-<p align="center">USUARIOS</p>
 
+<h1 align="center"> LISTA DE USUARIOS</h1>
 <?php
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -18,28 +20,36 @@ use MiW\Results\Entity\User;
 $entityManager = getEntityManager();
 $userRepository = $entityManager->getRepository(User::class);
 
-$username = $_POST['username'];
+$tabla = "<table align='center' border=\"8\">";
+$tabla = $tabla . "<tr><td>Nombre de usuario</td><td>Email</td><td>Activado</td><td>Administrador</td></tr>";
 
-$tabla = "<table border=\"1\">";
-$tabla = $tabla."<tr><td>Nombre de usuario</td><td>Email</td></tr>";
+$users = $userRepository->findAll();
 
-if (empty($username)) {
-    $users = $userRepository->findAll();
-    foreach ($users as $user){
-        $tabla = $tabla."<tr><td>".$user->getUsername()."</td><td>".$user->getEmail()."</td></tr>";
-    }
-
-} else {
-    $users = $userRepository->findOneBy(array('username' => $username));
-    if (empty($users)){
-        echo 'No existe el usuario '.$username;
-        exit(0);
-    }
-    $tabla = $tabla."<tr><td>".$users->getUsername()."</td><td>".$users->getEmail()."</td></tr>";
+foreach ($users as $user) {
+    $txtEnabled= $user->isEnabled() ? 'S&iacute;' : 'No';
+    $txtAdmin= $user->isAdmin() ? 'S&iacute;' : 'No';
+    $tabla = $tabla . "<tr><td>" . $user->getUsername() . "</td><td>" . $user->getEmail() .
+        "</td><td>". $txtEnabled . "</td><td>" . $txtAdmin . "</td></tr>";
 }
+echo $tabla . PHP_EOL;
 
-echo $tabla;
+echo <<<____MARCAFIN
+    <form action="list_users2.php" method="post" enctype="multipart/form-data">
+        <table  align="center" border="0">
+            <tr>
+                <th colspan="2">Buscar usuario</th>
+            </tr>
+            <tr>
+                <td>Nombre de usuario:</td><td><input type="text" name="username"/>   </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" value="Buscar" /></td>
+            </tr>
+        </table>
+    </form>
+____MARCAFIN;
 
 ?>
+
 </body>
 </html>

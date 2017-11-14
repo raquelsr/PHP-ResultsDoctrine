@@ -1,4 +1,4 @@
-<?php   // src/scripts/list_users.php
+<?php
 
 require __DIR__ . '/../vendor/autoload.php';
 

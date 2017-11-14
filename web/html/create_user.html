@@ -1,32 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Crear usuario</title>
+    <title>Alta usuario</title>
     <meta charset="UTF-8">
 </head>
 <body>
 
 <form action="../create_user.php" method="post" enctype="multipart/form-data">
     <fieldset>
-        <legend>Formulario de Datos personales</legend>
+        <legend>Alta usuario</legend>
         <table border="0">
             <tr>
-                <th colspan="2">Crear formulario</th>
+                <th colspan="2">Datos del nuevo usuario</th>
             </tr>
             <tr>
-                <td>Nombre de usuario:</td><td><input type="text" name="username"/>   </td>
+                <td>Nombre de usuario:</td><td><label>
+                <input type="text" name="username"/>
+            </label></td>
             </tr>
             <tr>
-                <td>Email:</td><td><input type="email" name="email" />   </td>
+                <td>Email:</td><td><label>
+                <input type="email" name="email"/>
+            </label></td>
             </tr>
             <tr>
-                <td>Password:</td><td><input type="password" name="password" />   </td>
+                <td>Password:</td><td><label>
+                <input type="password" name="password"/>
+            </label></td>
             </tr>
             <tr>
-                <td>¿Está activado?</td><td><input type="checkbox" name="enabled" value="1" />   </td>
+                <td>¿Está activado?</td><td><label>
+                <input type="checkbox" name="enabled" value="1"/>
+            </label></td>
             </tr>
             <tr>
-                <td>¿Permisos de administrador?</td><td><input type="checkbox" name="admin" value="1" />   </td>
+                <td>¿Permisos de administrador?</td><td><label>
+                <input type="checkbox" name="admin" value="1"/>
+            </label></td>
             </tr>
             <tr>
                 <td colspan="2" align="center"><input type="submit" value="Añadir" /></td>

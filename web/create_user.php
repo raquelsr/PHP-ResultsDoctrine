@@ -34,34 +34,34 @@ try {
     $entityManager->flush();
 
     echo <<< ___MARCA_FIN
-  <table border="1" summary="formulario">
-	  <tr>
-		  <th colspan="2">Usuario añadido: </th>
-		</tr>
-	  <tr>
-		  <td>Nombre:</td><td>$_POST[username]</td>
-		</tr>
-	  <tr>
-		  <td>Email:</td><td>$_POST[email]</td>
-		</tr>
-	  <tr>
-		  <td>Contraseña:</td><td>$_POST[password]</td>
-		</tr>
-	  <tr>
-		  <td>Activado:</td><td>$txtEnabled</td>
-		</tr>
-	  <tr>
-		  <td>¿Es administrador?</td><td>$txtAdmin</td>
-		</tr>
-	</table>
+        <h2 align="center">El usuario "$_POST[username]" ha sido añadido correctamente.</h2>
+      <table align="center" border="1" summary="formulario">
+          <tr>
+              <th colspan="2">Usuario añadido: </th>
+            </tr>
+          <tr>
+              <td>Nombre:</td><td>$_POST[username]</td>
+            </tr>
+          <tr>
+              <td>Email:</td><td>$_POST[email]</td>
+            </tr>
+          <tr>
+              <td>Contraseña:</td><td>$_POST[password]</td>
+            </tr>
+          <tr>
+              <td>Activado:</td><td>$txtEnabled</td>
+            </tr>
+          <tr>
+              <td>¿Es administrador?</td><td>$txtAdmin</td>
+            </tr>
+        </table>
 ___MARCA_FIN;
 
 } catch (Exception $exception) {
     echo <<<____ERROR
-        <h2>Ha ocurrido un error.</h2>
+        <h2 align="center">Ha ocurrido un error.</h2>
 ____ERROR;
     echo $exception->getMessage();
-
 }
 ?>
 </body>

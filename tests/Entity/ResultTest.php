@@ -61,7 +61,11 @@ class ResultTest extends \PHPUnit\Framework\TestCase
      */
     public function testConstructor()
     {
-
+        $result2 = new Result(10, $this->user, new \DateTime('now'));
+        self::assertNotEmpty($result2);
+        self::assertEquals(10,$result2->getResult());
+        self::assertEquals($this->user, $result2->getUser());
+        self::assertEquals(new \DateTime('now'), $result2->getTime());
     }
 
     /**
@@ -72,7 +76,7 @@ class ResultTest extends \PHPUnit\Framework\TestCase
      */
     public function testGet_Id()
     {
-        $this->assertEquals('0',$this->result->getId());
+        self::assertEquals('0',$this->result->getId());
     }
 
     /**
@@ -84,9 +88,7 @@ class ResultTest extends \PHPUnit\Framework\TestCase
      */
     public function testResult()
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        self::assertEquals(self::POINTS, $this->result->getResult());
     }
 
     /**
@@ -98,9 +100,8 @@ class ResultTest extends \PHPUnit\Framework\TestCase
      */
     public function testUser()
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        self::assertEquals($this->user, $this->result->getUser());
+        self::assertEquals($this->user->getUsername(), $this->result->getUser()->getUsername());
     }
 
     /**
@@ -112,9 +113,7 @@ class ResultTest extends \PHPUnit\Framework\TestCase
      */
     public function testTime()
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        self::assertEquals(new \DateTime('now'), $this->result->getTime());
     }
 
     /**
@@ -125,9 +124,15 @@ class ResultTest extends \PHPUnit\Framework\TestCase
      */
     public function testTo_String()
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
+        $string = sprintf(
+            '%3d - %3d - %30s - %s',
+            $this->result->getId(),
+            $this->result->getResult(),
+            $this->result->getUser(),
+            $this->result->getTime()->format('Y-m-d H:i:s')
         );
+
+        self::assertEquals($string, $this->result->__toString());
     }
 
     /**
@@ -138,8 +143,15 @@ class ResultTest extends \PHPUnit\Framework\TestCase
      */
     public function testJson_Serialize()
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $array = array (
+                    'resultado' => array(
+                        'id'     => $this->result->getId(),
+                        'result' => $this->result->getResult(),
+                        'user'   => $this->result->getUser(),
+                        'time'   => $this->result->getTime()->format('Y-m-d H:i:s')
+                    )
+                 );
+
+        self::assertEquals($array, $this->result->jsonSerialize());
     }
 }

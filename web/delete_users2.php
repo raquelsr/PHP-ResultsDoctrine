@@ -1,9 +1,12 @@
 <html>
 <head>
-    <title>Usuarios</title>
+    <title>Usuarios eliminados</title>
 </head>
 <body>
-<p align="center">USUARIOS</p>
+<h1 align="center">USUARIOS ELIMINADOS</h1>
+
+</br>
+<p align="center">Se han eliminado los usuarios: </p>
 
 <?php
 
@@ -25,10 +28,13 @@ foreach ($users as $user){
     $valor = $_POST[$item];
     if ($valor == 1 ){
         $entityManager->remove($user);
-        echo "borrado $user";
+        echo $user;
     }
     $item++;
 
 }
 
 $entityManager->flush();
+?>
+</body>
+</html>

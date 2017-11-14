@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Actualizar usuario</title>
+    <title>Modificar usuario</title>
 </head>
 <body>
+<h1 align="center">MODIFICAR USUARIO</h1>
 
 <?php
 

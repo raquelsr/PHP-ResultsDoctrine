@@ -43,7 +43,7 @@ if (in_array('--json', $argv, true)) {
 
 }else if ($argc === 1) {
     $results = $resultsRepository->findAll();
-    echo PHP_EOL . sprintf('%3s - %5s - %20s - %s', 'Id', 'res', 'username', 'time') . PHP_EOL;
+    echo PHP_EOL . sprintf('%3s - %5s - %20s - %20s', 'Id', 'res', 'username', 'time') . PHP_EOL;
     $items = 0;
     foreach ($results as $result) {
         echo $result . PHP_EOL;
@@ -59,7 +59,7 @@ if (in_array('--json', $argv, true)) {
         $user = $userRepository->findOneBy(array('username' => $valor));
         $results = $resultsRepository->findBy(array('user' => $user));
     }
-    echo PHP_EOL . sprintf('%3s - %5s - %20s - %s', 'Id', 'res', 'username', 'time') . PHP_EOL;
+    echo PHP_EOL . sprintf('%3s - %5s - %20s - %20s', 'Id', 'res', 'username', 'time') . PHP_EOL;
     $items = 0;
     /* @var Result $result */
     foreach ($results as $result) {

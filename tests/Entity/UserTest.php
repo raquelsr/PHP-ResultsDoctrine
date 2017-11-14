@@ -27,7 +27,10 @@ class UserTest extends TestCase
         $this->user = new User();
         $this->user->setUsername('user1');
         $this->user->setEmail('user1@mail.com');
-        $this->user->setIsAdmin(true);
+        $this->user->setPassword('user1password');
+        $this->user->setToken('tokenprueba');
+        $this->user->setEnabled(true);
+        $this->user->setLastLogin(new \DateTime('now'));
     }
 
     /**
@@ -35,13 +38,14 @@ class UserTest extends TestCase
      */
     public function testConstructor()
     {
-        $user2 = new User('user2','user2@mail.com','user2password',true, true);
+        $user2 = new User('user2','user2@mail.com','user2password');
         self::assertEquals(0,$user2->getId());
         self::assertEquals('user2',$user2->getUsername());
         self::assertEquals('user2@mail.com', $user2->getEmail());
         self::assertNotEmpty($user2->getPassword());
         self::assertEquals(true, $user2->isEnabled());
-        self::assertEquals(true, $user2->isAdmin());
+        self::assertNotEmpty($user2->getToken());
+        self::assertEquals(new \DateTime('now'), $user2->getLastLogin());
     }
 
     /**
@@ -77,16 +81,32 @@ class UserTest extends TestCase
     public function testIsSetEnabled()
     {
         $this->user->setEnabled(false);
-        self::assertEquals(false, $this->user->isEnabled());
+        self::assertFalse($this->user->isEnabled());
+    }
+
+
+    /**
+     * Implement testGetSetToken().
+     *
+     * @covers \MiW\Results\Entity\User::setToken()
+     * @covers \MiW\Results\Entity\User::getToken()
+     * @return void
+     */
+    public function testGetSetToken()
+    {
+        self::assertNotEmpty($this->user->getToken());
     }
 
     /**
-     * @covers \MiW\Results\Entity\User::setAdmin()
-     * @covers \MiW\Results\Entity\User::isAdmin()
+     * Implement testLastLogin().
+     *
+     * @covers \MiW\Results\Entity\User::setLastLogin()
+     * @covers \MiW\Results\Entity\User::getLastLogin()
+     * @return void
      */
-    public function testIsSetAdmin()
+    public function testLastLogin()
     {
-        self::assertEquals(true, $this->user->isAdmin());
+        self::assertEquals(new \DateTime('now'), $this->user->getLastLogin());
     }
 
     /**
@@ -106,7 +126,7 @@ class UserTest extends TestCase
      */
     public function testToString()
     {
-        self::assertEquals('user1', $this->user->__toString());
+        self::assertEquals('User: user1 Email: user1@mail.com', $this->user->__toString());
     }
 
     /**
@@ -120,7 +140,8 @@ class UserTest extends TestCase
                             'username'      => utf8_encode($this->user->getUsername()),
                             'email'         => utf8_encode($this->user->getEmail()),
                             'enabled'       => $this->user->isEnabled(),
-                            'admin'         => $this->user->isAdmin()
+                            'last_login'    => $this->user->getLastLogin(),
+                            'token'         => $this->user->getToken()
                         )
                     );
 

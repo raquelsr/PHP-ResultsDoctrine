@@ -27,6 +27,7 @@ class Result implements \JsonSerializable
      * @ORM\Column(
      *     name     = "id",
      *     type     = "integer",
+     *     length   = 11,
      *     nullable = false
      *     )
      * @ORM\Id
@@ -43,6 +44,7 @@ class Result implements \JsonSerializable
      * @ORM\Column(
      *     name     = "result",
      *     type     = "integer",
+     *     length   = 11,
      *     nullable = false
      *     )
      */
@@ -162,10 +164,10 @@ class Result implements \JsonSerializable
     public function __toString(): string
     {
         return sprintf(
-            '%3d - %3d - %30s - %s',
+            '%3d - %3d - %20s - %20s',
             $this->id,
             $this->result,
-            $this->user,
+            $this->user->__toString(),
             $this->time->format('Y-m-d H:i:s')
         );
     }

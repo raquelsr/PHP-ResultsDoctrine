@@ -125,7 +125,7 @@ class ResultTest extends \PHPUnit\Framework\TestCase
     public function testTo_String()
     {
         $string = sprintf(
-            '%3d - %3d - %30s - %s',
+            '%3d - %3d - %20s - %20s',
             $this->result->getId(),
             $this->result->getResult(),
             $this->result->getUser(),

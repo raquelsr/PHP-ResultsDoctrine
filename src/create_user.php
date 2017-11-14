@@ -9,18 +9,29 @@ use MiW\Results\Entity\User;
 $dotenv = new \Dotenv\Dotenv(__DIR__ . '/..', \MiW\Results\Utils::getEnvFileName(__DIR__ . '/..'));
 $dotenv->load();
 
+if ($argc < 3 ) {
+    $fich = basename(__FILE__);
+    echo <<< MARCA_FIN
+    
+    Usage: $fich <UserName> <Email> <PassWord>
+
+MARCA_FIN;
+    exit(0);
+}
+
 $entityManager = getEntityManager();
 
 $user = new User();
-$user->setUsername($_ENV['ADMIN_USER_NAME']);
-$user->setEmail($_ENV['ADMIN_USER_EMAIL']);
-$user->setPassword($_ENV['ADMIN_USER_PASSWD']);
+$user->setUsername($argv[1]);
+$user->setEmail($argv[2]);
+$user->setPassword($argv[3]);
 $user->setEnabled(true);
+$user->setLastLogin(new \DateTime('now'));
 
 try {
     $entityManager->persist($user);
     $entityManager->flush();
-    echo 'Usuario creado.' . PHP_EOL;
+    echo 'Usuario ' . $user->getUsername(). ' creado.' . PHP_EOL;
 } catch (Exception $exception) {
     echo $exception->getMessage();
 }

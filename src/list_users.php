@@ -41,15 +41,16 @@ if (in_array('--json', $argv)) {
     $users = $userRepository->findAll();
 
         $items = 0;
-        echo PHP_EOL . sprintf("  %2s: %20s %30s %7s\n", 'Id', 'Username:', 'Email:', 'Enabled:');
+        echo PHP_EOL . sprintf("  %2s: %20s %30s %7s %25s \n", 'Id', 'Username:', 'Email:', 'Enabled:' , 'Last_login');
         /** @var User $user */
         foreach ($users as $user) {
             echo sprintf(
-                '- %2d: %20s %30s %7s',
+                '- %2d: %20s %30s %7s %25s',
                 $user->getId(),
                 $user->getUsername(),
                 $user->getEmail(),
-                ($user->isEnabled()) ? 'true' : 'false'
+                ($user->isEnabled()) ? 'true' : 'false',
+                $user->getLastLogin()->format("d-m-Y H:i:s")
             ),
             PHP_EOL;
             $items++;
@@ -65,13 +66,14 @@ if (in_array('--json', $argv)) {
     if (empty($user)){
         echo 'No existe el usuario: ' . $username . "." . PHP_EOL;
     } else {
-        echo PHP_EOL . sprintf("  %2s: %20s %30s %7s\n", 'Id', 'Username:', 'Email:', 'Enabled:');
+        echo PHP_EOL . sprintf("  %2s: %20s %30s %7s %25s \n", 'Id', 'Username:', 'Email:', 'Enabled:' , "Last Login");
         echo sprintf(
-            '- %2d: %20s %30s %7s',
+            '- %2d: %20s %30s %7s %25s',
             $user->getId(),
             $user->getUsername(),
             $user->getEmail(),
-            ($user->isEnabled()) ? 'true' : 'false'
+            ($user->isEnabled()) ? 'true' : 'false',
+            $user->getLastLogin()->format("d-m-Y H:i:s")
         ),
         PHP_EOL . PHP_EOL;
     }

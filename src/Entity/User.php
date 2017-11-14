@@ -11,11 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  *     name                 = "users",
  *     uniqueConstraints    = {
  *          @ORM\UniqueConstraint(
- *              name="IDX_UNIQ_USER", columns={ "username" }
+ *              name="UNIQ_TOKEN", columns={ "token" }
  *          ),
- *          @ORM\UniqueConstraint(
- *              name="IDX_UNIQ_EMAIL", columns={ "email" }
- *          )
  *      }
  *     )
  * @ORM\Entity
@@ -30,6 +27,7 @@ class User implements \JsonSerializable
      * @ORM\Column(
      *     name     = "id",
      *     type     = "integer",
+     *     length   = 11,
      *     nullable = false
      *     )
      * @ORM\Id
@@ -48,7 +46,6 @@ class User implements \JsonSerializable
      *     type     = "string",
      *     length   = 40,
      *     nullable = false,
-     *     unique   = true
      *     )
      */
     private $username;
@@ -63,7 +60,6 @@ class User implements \JsonSerializable
      *     type     = "string",
      *     length   = 60,
      *     nullable = false,
-     *     unique   = true
      *     )
      */
     private $email;
@@ -82,20 +78,6 @@ class User implements \JsonSerializable
     private $enabled;
 
     /**
-     * IsAdmin
-     *
-     * @var boolean
-     *
-     * @ORM\Column(
-     *     name     = "admin",
-     *     type     = "boolean",
-     *     nullable = true,
-     *     options  = { "default" = false }
-     *     )
-     */
-    private $isAdmin;
-
-    /**
      * Password
      *
      * @var string
@@ -110,27 +92,58 @@ class User implements \JsonSerializable
     private $password;
 
     /**
+     * User last_login
+     *
+     * @var \DateTime
+     *
+     * @ORM\Column(
+     *     name     = "last_login",
+     *     type     = "datetime",
+     *     nullable = false
+     *     )
+     */
+    private $last_login;
+
+
+    /**
+     * Token
+     *
+     * @var string
+     *
+     * @ORM\Column(
+     *     name     = "token",
+     *     type     = "string",
+     *     length   = 40,
+     *     nullable = false
+     *     )
+     */
+    private $token;
+
+
+    /**
      * User constructor.
      *
-     * @param string $username username
-     * @param string $email    email
-     * @param string $password password
-     * @param bool   $enabled  enabled
-     * @param bool   $isAdmin  isAdmin
+     * @param string    $username       username
+     * @param string    $email          email
+     * @param bool      $enabled        enabled
+     * @param string    $password       password
+     * @param \DateTime $last_login     last_login
+     * @param string    $token          token
      */
+
     public function __construct(
         string $username = '',
         string $email = '',
-        string $password = '',
-        bool   $enabled = false,
-        bool   $isAdmin = false
+        string $password = ''
     ) {
+        $rand_token = str_shuffle("abcdefghijklmnopqrstuvwxyz0123456789".uniqid());
         $this->id       = 0;
         $this->username = $username;
         $this->email    = $email;
         $this->setPassword($password);
-        $this->enabled  = $enabled;
-        $this->isAdmin  = $isAdmin;
+        $this->enabled  = true;
+        $this->token    = $rand_token;
+        $this->last_login = new \DateTime('now');
     }
 
     /**
@@ -225,21 +238,37 @@ class User implements \JsonSerializable
     }
 
     /**
-     * @return bool
+     * @return \DateTime
      */
-    public function isAdmin(): bool
+    public function getLastLogin(): \DateTime
     {
-        return $this->isAdmin;
+        return $this->last_login;
     }
 
     /**
-     * @param bool $isAdmin
+     * @param \DateTime $last_login
      */
-    public function setIsAdmin(bool $isAdmin)
+    public function setLastLogin(\DateTime $last_login)
     {
-        $this->isAdmin = $isAdmin;
+        $this->last_login = $last_login;
     }
 
+    /**
+     * @return string
+     */
+    public function getToken(): string
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string $token
+     */
+    public function setToken(string $token)
+    {
+        $rand_token = str_shuffle($token.uniqid());
+        $this->token = $rand_token;
+    }
 
 
     /**
@@ -249,7 +278,7 @@ class User implements \JsonSerializable
      */
     public function __toString(): string
     {
-        return $this->username;
+        return 'User: ' . $this->username . ' Email: ' . $this->getEmail();
     }
 
     /**
@@ -261,11 +290,12 @@ class User implements \JsonSerializable
     {
         return array (
             'user' => array(
-                        'id'            => $this->id,
-                        'username'      => utf8_encode($this->username),
-                        'email'         => utf8_encode($this->email),
-                        'enabled'       => $this->enabled,
-                        'admin'         => $this->isAdmin
+                        'id'                 => $this->id,
+                        'username'           => utf8_encode($this->username),
+                        'email'              => utf8_encode($this->email),
+                        'enabled'            => $this->enabled,
+                        'last_login'         => $this->last_login,
+                        'token'              => $this->token
                     )
         );
     }

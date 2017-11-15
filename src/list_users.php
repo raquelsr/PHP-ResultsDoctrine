@@ -14,7 +14,7 @@ if ($argc > 3) {
     $fich = basename(__FILE__);
     echo <<< MARCA_FIN
 
-    Usage: $fich [<UserName>]
+    Usage: $fich [<IdUser>]
 
 MARCA_FIN;
     exit(0);

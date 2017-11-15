@@ -14,15 +14,15 @@ if ($argc < 3 || $argc > 4) {
     $fich = basename(__FILE__);
     echo <<< MARCA_FIN
     
-    Para insertar resultado debes introducir un resultado y el nombre del usuario.
-    Usage: $fich <Result> <UserName>
+    Para insertar resultado debes introducir un resultado y el id del usuario.
+    Usage: $fich <Result> <IdUser>
 
 MARCA_FIN;
     exit(0);
 }
 
 $newResult    = (int) $argv[1];
-$username      = (string) $argv[2];
+$idUser       = (int) $argv[2];
 $newTimestamp =  new DateTime('now');
 
 $entityManager = getEntityManager();
@@ -30,9 +30,9 @@ $entityManager = getEntityManager();
 /** @var User $user */
 $user = $entityManager
     ->getRepository(User::class)
-    ->findOneBy(['username' => $username]);
+    ->find($idUser);
 if (empty($user)) {
-    echo "Usuario $username no encontrado." . PHP_EOL;
+    echo "Usuario con ID: $idUser no encontrado." . PHP_EOL;
     exit(0);
 }
 
@@ -43,7 +43,7 @@ try {
     if (in_array('--json', $argv, true)) {
         echo json_encode($result, JSON_PRETTY_PRINT);
     } else {
-        echo 'Añadido resultado ' . $result->getResult() . ' al usuario ' . $user->getUsername() . PHP_EOL;
+        echo 'Añadido resultado ' . $result->getResult() . ' al usuario con ID : ' . $idUser . PHP_EOL;
     }
 } catch (Exception $exception) {
     echo $exception->getMessage();

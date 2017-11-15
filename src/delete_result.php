@@ -15,23 +15,23 @@ if ($argc < 3 || $argc > 4) {
     $fich = basename(__FILE__);
     echo <<< MARCA_FIN
 
-    Usage: $fich <UserName> <Result> 
+    Usage: $fich <IdUser> <Result> 
 
 MARCA_FIN;
     exit(0);
 }
 
-$paramUsername = (string)$argv[1];
+$id = (string)$argv[1];
 $paramResult = (int)$argv[2];
 
 
 $entityManager = getEntityManager();
 
 $userRepository = $entityManager->getRepository(User::class);
-$user = $userRepository->findOneBy(array('username' => $paramUsername));
+$user = $userRepository->find($id);
 
 if (empty($user)) {
-    echo "No existe el usuario $paramUsername" . PHP_EOL;
+    echo "No existe el usuario $id" . PHP_EOL;
     exit(0);
 }
 
@@ -39,7 +39,7 @@ $resultsRepository = $entityManager->getRepository(Result::class);
 $results = $resultsRepository->findBy(array('result' => $paramResult, 'user' => $user));
 
 if (empty($results)) {
-    echo "No existe el resultado $paramResult del usuario $paramUsername" . PHP_EOL;
+    echo "No existe el resultado $paramResult del usuario $id" . PHP_EOL;
     exit(0);
 }
 
@@ -51,7 +51,7 @@ foreach ($results as $result) {
         echo 'Borrado resultado:'.PHP_EOL;
         echo json_encode($result, JSON_PRETTY_PRINT);
     } else {
-        echo 'Borrado resultado ' . $paramResult . " del usuario $paramUsername." . PHP_EOL;
+        echo 'Borrado resultado ' . $paramResult . " del usuario $id." . PHP_EOL;
     }
 }
 

@@ -15,7 +15,7 @@ if ($argc < 3 || $argc > 4) {
     echo <<< MARCA_FIN
     
     Para insertar resultado debes introducir un resultado y el nombre del usuario.
-    Usage: $fich <Result> <UserName> [<Timestamp>]
+    Usage: $fich <Result> <UserName>
 
 MARCA_FIN;
     exit(0);
@@ -23,7 +23,7 @@ MARCA_FIN;
 
 $newResult    = (int) $argv[1];
 $username      = (string) $argv[2];
-$newTimestamp = $argv[3] ?? new DateTime('now');
+$newTimestamp =  new DateTime('now');
 
 $entityManager = getEntityManager();
 
@@ -40,7 +40,11 @@ $result = new Result($newResult, $user, $newTimestamp);
 try {
     $entityManager->persist($result);
     $entityManager->flush();
-    echo 'Añadido resultado ' . $result->getResult() . ' al usuario ' . $user->getUsername() . PHP_EOL;
+    if (in_array('--json', $argv, true)) {
+        echo json_encode($result, JSON_PRETTY_PRINT);
+    } else {
+        echo 'Añadido resultado ' . $result->getResult() . ' al usuario ' . $user->getUsername() . PHP_EOL;
+    }
 } catch (Exception $exception) {
     echo $exception->getMessage();
 }

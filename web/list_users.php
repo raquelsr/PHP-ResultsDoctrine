@@ -25,13 +25,13 @@ $userRepository = $entityManager->getRepository(User::class);
 
 $tabla = "<table align='center' border=\"8\"  bgcolor=\"#ffebcd\">";
 $tabla = $tabla . "<tr><td>Nombre de usuario</td><td>Email</td><td>Activado</td><td>Último acceso</td></tr>";
-
+/* @var User[] $users */
 $users = $userRepository->findAll();
 
 
 echo <<<____MARCAFIN
     <form action="list_users2.php" method="post" enctype="multipart/form-data">
-        <table  bgcolor="#48d1cc" align="center" border="0">
+        <table  bgcolor="#48d1cc" align="center" border="2">
             <tr>
                 <td>Nombre de usuario:</td><td><input type="text" name="username"/>   </td>
            

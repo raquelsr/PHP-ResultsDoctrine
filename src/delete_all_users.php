@@ -15,19 +15,18 @@ $entityManager = getEntityManager();
 $userRepository = $entityManager->getRepository(User::class);
 $users = $userRepository->findAll();
 
-if ($argc === 1) {
-    $items = 0;
 
-    foreach ($users as $user) {
-        $entityManager->remove($user);
-        $items++;
-    }
-    $entityManager->flush();
+$items = 0;
 
+foreach ($users as $user) {
+    $entityManager->remove($user);
+    $items++;
+}
+$entityManager->flush();
+
+if (in_array('--json', $argv, true)) {
+    echo json_encode($users, JSON_PRETTY_PRINT);
+} else {
     echo 'Se han borrado todos los usuarios. Total : ' . $items . ' usuarios borrados.' . PHP_EOL;
-
 }
 
-/*elseif (in_array('--json', $argv, true)) {
-    echo json_encode($users, JSON_PRETTY_PRINT);
-}*/

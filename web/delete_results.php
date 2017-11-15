@@ -19,11 +19,13 @@ use MiW\Results\Entity\Result;
 
 $entityManager = getEntityManager();
 $resultRepository = $entityManager->getRepository(Result::class);
+
+/* @var Result[] $results */
 $results = $resultRepository->findAll();
 
 
 $formulario = "<form action=\"delete_results2.php\" method=\"post\" enctype=\"multipart/form-data\">
-        <table bgcolor=\"#e0ffff\" align=\"center\" border=\"0\">
+        <table bgcolor=\"#e0ffff\" align=\"center\" border=\"4\">
             <tr>
                 <th bgcolor='#FFFFFF' colspan=\"5\">Selecciona los resultados a eliminar:</th>
             </tr>

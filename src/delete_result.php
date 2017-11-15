@@ -11,7 +11,7 @@ require_once __DIR__ . '/../bootstrap.php';
 use MiW\Results\Entity\Result;
 use MiW\Results\Entity\User;
 
-if ($argc != 3) {
+if ($argc < 3 || $argc > 4) {
     $fich = basename(__FILE__);
     echo <<< MARCA_FIN
 
@@ -46,9 +46,14 @@ if (empty($results)) {
 
 foreach ($results as $result) {
     $entityManager->remove($result);
-}
 
-echo 'Borrado resultado ' . $paramResult . " del usuario $paramUsername." . PHP_EOL;
+    if (in_array('--json', $argv, true)) {
+        echo 'Borrado resultado:'.PHP_EOL;
+        echo json_encode($result, JSON_PRETTY_PRINT);
+    } else {
+        echo 'Borrado resultado ' . $paramResult . " del usuario $paramUsername." . PHP_EOL;
+    }
+}
 
 $entityManager->flush();
 

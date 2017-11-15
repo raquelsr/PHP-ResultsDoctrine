@@ -6,6 +6,10 @@
 </head>
 <body>
 
+<p align="center"><a href="index.html">Volver a página de inicio</a></p>
+
+<p align="center"><a href="html/create_user.html">Crear otro usuario</a></p>
+
 <?php
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -60,9 +64,6 @@ try {
         </table>
 </br>
 
-<a href="index.html">Volver a la página de inicio</a>
-</br>
-<a href="html/create_user.html">Crear otro usuario</a>
 ___MARCA_FIN;
 
 } catch (Exception $exception) {

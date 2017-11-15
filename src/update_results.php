@@ -10,7 +10,7 @@ require_once __DIR__ . '/../bootstrap.php';
 
 use MiW\Results\Entity\Result;
 
-if ($argc != 3) {
+if ($argc < 3 || $argc > 4) {
     $fich = basename(__FILE__);
     echo <<< MARCA_FIN
 
@@ -26,6 +26,7 @@ $paramNewResult     = (int)     $argv[2];
 $entityManager = getEntityManager();
 
 $resultsRepository = $entityManager->getRepository(Result::class);
+/** @var Result[] $results */
 $results = $resultsRepository->findBy(array('result' => $paramResult));
 
 if (empty($results)){
@@ -35,6 +36,7 @@ if (empty($results)){
 
 foreach ($results as $result) {
     $result->setResult($paramNewResult);
+    $result->setTime(new DateTime('now'));
 }
 $entityManager->flush();
 

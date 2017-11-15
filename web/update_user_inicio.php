@@ -20,6 +20,8 @@ use MiW\Results\Entity\User;
 
 $entityManager = getEntityManager();
 $userRepository = $entityManager->getRepository(User::class);
+
+/* @var User[] $users */
 $users = $userRepository->findAll();
 
 

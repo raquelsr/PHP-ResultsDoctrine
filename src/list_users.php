@@ -26,10 +26,11 @@ $userRepository = $entityManager->getRepository(User::class);
 
 if (in_array('--json', $argv)) {
     if ($argc ===3){
-        $username = $argv[1];
-        $users = $userRepository->findOneBy(array('username' => $username));
+        $id = (int) $argv[1];
+        $users = $userRepository->find($id);
         if (empty($users)){
-            echo 'No existe el usuario: ' . $username . PHP_EOL;
+            echo 'No existe el usuario: ' . $id . PHP_EOL;
+            exit(0);
         }
     } else {
         $users = $userRepository->findAll();
@@ -60,11 +61,11 @@ if (in_array('--json', $argv)) {
 
 } else if ($argc ===2 ){
 
-    $username = $argv[1];
-    $user = $userRepository->findOneBy(array('username' => $username));
+    $id = (int) $argv[1];
+    $user = $userRepository->find($id);
 
     if (empty($user)){
-        echo 'No existe el usuario: ' . $username . "." . PHP_EOL;
+        echo 'No existe el usuario con ID : ' . $id . "." . PHP_EOL;
     } else {
         echo PHP_EOL . sprintf("  %2s: %20s %30s %7s %25s \n", 'Id', 'Username:', 'Email:', 'Enabled:' , "Last Login");
         echo sprintf(

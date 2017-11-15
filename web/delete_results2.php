@@ -20,6 +20,7 @@ use MiW\Results\Entity\Result;
 
 $entityManager = getEntityManager();
 $resultRepository = $entityManager->getRepository(Result::class);
+/* @var Result[] $results */
 $results = $resultRepository->findAll();
 
 $tabla = "<table align='center' border=\"8\"  bgcolor=\"#ffebcd\">";

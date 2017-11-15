@@ -20,7 +20,11 @@ $user->setEnabled(true);
 try {
     $entityManager->persist($user);
     $entityManager->flush();
-    echo 'Usuario creado.' . PHP_EOL;
+    if (in_array('--json', $argv, true)) {
+        echo json_encode($user, JSON_PRETTY_PRINT);
+    } else {
+        echo 'Usuario ' . $user->getUsername(). ' creado.' . PHP_EOL;
+    }
 } catch (Exception $exception) {
     echo $exception->getMessage();
 }

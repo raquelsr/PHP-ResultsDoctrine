@@ -42,11 +42,19 @@ if (in_array('--json', $argv, true)) {
     echo json_encode($results, JSON_PRETTY_PRINT).PHP_EOL;
 
 }else if ($argc === 1) {
+    /** @var Result[] $results */
     $results = $resultsRepository->findAll();
     echo PHP_EOL . sprintf('%3s - %5s - %20s - %20s', 'Id', 'res', 'username', 'time') . PHP_EOL;
     $items = 0;
     foreach ($results as $result) {
-        echo $result . PHP_EOL;
+        echo sprintf(
+            '- %3s - %5s - %20s - %20s',
+            $result->getId(),
+            $result->getResult(),
+            $result->getUser()->getUsername(),
+            $result->getTime()->format("d-m-Y H:i:s")
+        ),
+            PHP_EOL;
         $items++;
     }
     echo PHP_EOL . "Total: $items results.".PHP_EOL;
@@ -63,7 +71,14 @@ if (in_array('--json', $argv, true)) {
     $items = 0;
     /* @var Result $result */
     foreach ($results as $result) {
-        echo $result . PHP_EOL;
+        echo sprintf(
+            '- %3s - %5s - %20s - %20s',
+            $result->getId(),
+            $result->getResult(),
+            $result->getUser()->getUsername(),
+            $result->getTime()->format("d-m-Y H:i:s")
+        ),
+        PHP_EOL;
         $items++;
     }
     echo PHP_EOL . "Total: $items results.".PHP_EOL;

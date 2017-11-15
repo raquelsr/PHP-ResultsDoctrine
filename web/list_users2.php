@@ -3,6 +3,11 @@
     <title>Búsqueda usuario</title>
 </head>
 <body>
+
+<p align="center"><a href="index.html">Volver a página de inicio</a></p>
+<p align="center"><a href="list_users.php">Nueva búsqueda</a></p>
+
+
 <h1 align="center">USUARIO BUSCADO</h1>
 
 <?php
@@ -20,10 +25,11 @@ $userRepository = $entityManager->getRepository(User::class);
 
 $username = $_POST['username'];
 
-$tabla = "<table align='center' bgcolor=\"#e0ffff\" border=\"8\">";
+$tabla = "<table align='center' bgcolor=\"#e0ffff\" border=\"4\">";
 $tabla = $tabla."<tr bgcolor=\"#ffebcd\"><td>Nombre de usuario</td><td>Email</td><td>Activado</td><td>Último acceso</td></tr>";
 
 if (empty($username)) {
+    /* @var User[] $users */
     $users = $userRepository->findAll();
     foreach ($users as $user){
         $txtEnabled= $user->isEnabled() ? 'S&iacute;' : 'No';
@@ -33,6 +39,7 @@ if (empty($username)) {
     }
 
 } else {
+    /* @var User[] $users */
     $users = $userRepository->findBy(array('username' => $username));
     if (empty($users)){
         echo 'No existe el usuario '.$username;
@@ -50,9 +57,6 @@ if (empty($username)) {
 echo $tabla;
 
 ?>
-
-<a href="list_users.php">Nueva búsqueda</a><br>
-<a href="index.html">Volver a página de inicio</a>
 
 </body>
 </html>

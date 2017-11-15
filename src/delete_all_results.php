@@ -15,19 +15,20 @@ $entityManager = getEntityManager();
 $resultsRepository = $entityManager->getRepository(Result::class);
 $results = $resultsRepository->findAll();
 
-if ($argc === 1) {
-    $items = 0;
 
-    foreach ($results as $result) {
-        $entityManager->remove($result);
-        $items++;
-    }
-    $entityManager->flush();
+$items = 0;
 
+foreach ($results as $result) {
+    $entityManager->remove($result);
+    $items++;
+}
+$entityManager->flush();
+
+if (in_array('--json', $argv, true)) {
+    echo json_encode($results, JSON_PRETTY_PRINT);
+} else {
     echo 'Se han borrado todos los resultados. Total : ' . $items . ' resultados borrados.' . PHP_EOL;
-
 }
 
-/*elseif (in_array('--json', $argv, true)) {
-    echo json_encode($results, JSON_PRETTY_PRINT);
-}*/
+
+

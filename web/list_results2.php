@@ -4,8 +4,10 @@
 </head>
 <body>
 
-<a href="list_users.php">Nueva búsqueda</a><br>
-<a href="index.html">Volver a página de inicio</a>
+<p align="center"><a href="index.html">Volver a página de inicio</a></p>
+
+<p align="center"><a href="list_results.php">Nueva búsqueda</a></p>
+
 
 <h1 align="center">RESULTADOS DEL USUARIO</h1>
 
@@ -32,6 +34,7 @@ $tabla = "<table align='center' bgcolor=\"#e0ffff\" border=\"8\">";
 $tabla = $tabla . "<tr bgcolor=\"#ffebcd\"><td>Resultado</td><td>Nombre de usuario</td><td>Fecha</td></tr>";
 
 if (empty($username)) {
+    /* @var Result[] $results */
     $results = $resultRepository->findAll();
     foreach ($results as $result){
         $txtTime = $result->getTime()->format('d-m-Y H:i:s');
@@ -40,12 +43,14 @@ if (empty($username)) {
     }
 
 } else {
+    /* @var User[] $users */
     $users = $userRepository->findBy(array('username' => $username));
     if (empty($users)){
         echo 'No existe el usuario '.$username;
         exit(0);
     } else {
         foreach($users as $user){
+            /* @var Result[] $results */
             $results = $resultRepository->findBy(array('user' => $user));
             foreach ($results as $result){
                 $txtTime = $result->getTime()->format('d-m-Y H:i:s');

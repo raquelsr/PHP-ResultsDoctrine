@@ -26,6 +26,7 @@ $entityManager = getEntityManager();
 $userRepository = $entityManager->getRepository(User::class);
 $resultRepository = $entityManager->getRepository(Result::class);
 
+/* @var Result[] $results */
 $results = $resultRepository->findAll();
 
 

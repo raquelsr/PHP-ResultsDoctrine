@@ -16,43 +16,45 @@ if ($argc <  4 || $argc > 5) {
     echo <<< MARCA_FIN
 
     Modifica el resultado de un usuario determinado. 
-    Usage: $fich <UserName> <Result> <NewResult>
+    Usage: $fich <IdUser> <Result> <NewResult>
 
 MARCA_FIN;
     exit(0);
 }
 
-$paramUsername      = (string)  $argv[1];
+$paramIdUser        = (int)     $argv[1];
 $paramResult        = (int)     $argv[2];
 $paramNewResult     = (int)     $argv[3];
 
 $entityManager = getEntityManager();
 
 $userRepository = $entityManager->getRepository(User::class);
-$user = $userRepository->findOneBy(array('username' => $paramUsername));
+$user = $userRepository->find($paramIdUser);
 
 if (empty($user)){
-    echo "No existe el usuario $paramUsername".PHP_EOL;
+    echo "No existe el usuario $paramIdUser".PHP_EOL;
     exit(0);
 }
 
 $resultsRepository = $entityManager->getRepository(Result::class);
+/** @var Result[] $results */
 $results = $resultsRepository->findBy(array('result' => $paramResult, 'user' => $user));
 
 if (empty($results)){
-    echo "No existe el resultado $paramResult del usuario $paramUsername".PHP_EOL;
+    echo "No existe el resultado $paramResult del usuario con ID: $paramIdUser".PHP_EOL;
     exit(0);
 }
 
 foreach ($results as $result) {
     $result->setResult($paramNewResult);
+    $result->setTime(new DateTime('now'));
 }
 $entityManager->flush();
 
 if (in_array('--json', $argv)) {
     echo json_encode($results, JSON_PRETTY_PRINT);
 } else {
-    echo "Resultados antiguo $paramResult modificado a $paramNewResult para el usuario $paramUsername.".PHP_EOL;
+    echo "Resultados antiguo $paramResult modificado a $paramNewResult para el usuario con ID: $paramIdUser.".PHP_EOL;
 }
 
 

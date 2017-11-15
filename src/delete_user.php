@@ -10,31 +10,35 @@ require_once __DIR__ . '/../bootstrap.php';
 
 use MiW\Results\Entity\User;
 
-if ($argc != 2) {
+if ($argc < 2 || $argc > 3) {
     $fich = basename(__FILE__);
     echo <<< MARCA_FIN
 
-    Usage: $fich <Username>
+    Usage: $fich <Id>
 
 MARCA_FIN;
     exit(0);
 }
 
-$username = (string)$argv[1];
+$id = (int)$argv[1];
 
 $entityManager = getEntityManager();
 
 $userRepository = $entityManager->getRepository(User::class);
-$user = $userRepository->findOneBy(array('username' => $username));
+$user = $userRepository->find($id);
 
 if (empty($user)) {
-    echo "Usuario $username no encontrado." . PHP_EOL;
+    echo "Usuario con ID $id no encontrado." . PHP_EOL;
     exit(0);
 }
 
 $entityManager->remove($user);
 $entityManager->flush();
 
-echo "Borrado usuario: $user." . PHP_EOL;
-
+if (in_array('--json', $argv, true)) {
+    echo 'Borrado usuario: ' . PHP_EOL;
+    echo json_encode($user, JSON_PRETTY_PRINT);
+} else {
+    echo 'Borrado usuario con ID ' . $id . PHP_EOL;
+}
 

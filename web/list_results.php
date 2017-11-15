@@ -26,12 +26,13 @@ $resultRepository = $entityManager->getRepository(Result::class);
 $tabla = "<table align='center' border=\"8\"  bgcolor=\"#ffebcd\">";
 $tabla = $tabla . "<tr><td>Resultado</td><td>Nombre de usuario</td><td>Fecha</td></tr>";
 
+/* @var Result[] $results */
 $results = $resultRepository->findAll();
 
 
 echo <<<____MARCAFIN
     <form action="list_results2.php" method="post" enctype="multipart/form-data">
-        <table  bgcolor="#48d1cc" align="center" border="0">
+        <table  bgcolor="#48d1cc" align="center" border="2">
             <tr>
                 <td>Nombre de usuario:</td><td><input type="text" name="username"/>   </td>
            

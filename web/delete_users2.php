@@ -21,6 +21,7 @@ use MiW\Results\Entity\User;
 
 $entityManager = getEntityManager();
 $userRepository = $entityManager->getRepository(User::class);
+/* @var User[] $users */
 $users = $userRepository->findAll();
 
 $tabla = "<table align='center' border=\"8\"  bgcolor=\"#ffebcd\">";

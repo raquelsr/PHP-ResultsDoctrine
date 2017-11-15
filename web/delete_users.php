@@ -20,11 +20,12 @@ use MiW\Results\Entity\User;
 
 $entityManager = getEntityManager();
 $userRepository = $entityManager->getRepository(User::class);
+/** @var User[] $users */
 $users = $userRepository->findAll();
 
 
 $formulario = "<form action=\"delete_users2.php\" method=\"post\" enctype=\"multipart/form-data\">
-        <table bgcolor=\"#e0ffff\" align=\"center\" border=\"0\">
+        <table bgcolor=\"#e0ffff\" align=\"center\" border=\"4\">
             <tr>
                 <th bgcolor='#FFFFFF' colspan=\"5\">Selecciona los usuarios a eliminar:</th>
             </tr>

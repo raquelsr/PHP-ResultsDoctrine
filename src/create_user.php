@@ -9,7 +9,7 @@ use MiW\Results\Entity\User;
 $dotenv = new \Dotenv\Dotenv(__DIR__ . '/..', \MiW\Results\Utils::getEnvFileName(__DIR__ . '/..'));
 $dotenv->load();
 
-if ($argc < 3 ) {
+if ($argc < 3 || $argc > 5 ) {
     $fich = basename(__FILE__);
     echo <<< MARCA_FIN
     
@@ -31,7 +31,11 @@ $user->setLastLogin(new \DateTime('now'));
 try {
     $entityManager->persist($user);
     $entityManager->flush();
-    echo 'Usuario ' . $user->getUsername(). ' creado.' . PHP_EOL;
+    if (in_array('--json', $argv, true)) {
+        echo json_encode($user, JSON_PRETTY_PRINT);
+    } else {
+        echo 'Usuario ' . $user->getUsername(). ' creado.' . PHP_EOL;
+    }
 } catch (Exception $exception) {
     echo $exception->getMessage();
 }

@@ -26,6 +26,8 @@ $results = $resultRepository->findAll();
 $tabla = "<table align='center' border=\"8\"  bgcolor=\"#ffebcd\">";
 $tabla = $tabla . "<tr><td>Nombre de usuario</td><td>Resultado</td><td>Fecha</td></tr>";
 
+$item = 0;
+
 foreach ($results as $result){
 
     $valor = $_POST[$item];

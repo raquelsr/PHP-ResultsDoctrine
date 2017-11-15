@@ -27,6 +27,7 @@ $users = $userRepository->findAll();
 $tabla = "<table align='center' border=\"8\"  bgcolor=\"#ffebcd\">";
 $tabla = $tabla . "<tr><td>Nombre de usuario</td><td>Email</td><td>Activado</td><td>Último acceso</td></tr>";
 
+$item = 0;
 foreach ($users as $user){
 
     $valor = $_POST[$item];
